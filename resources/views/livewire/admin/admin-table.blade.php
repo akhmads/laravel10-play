@@ -16,10 +16,26 @@ new class extends Component {
     public $confirmDeletion = false;
     public $set_id;
 
+    public function mount()
+    {
+        if ( ! session('user_perPage')) {
+           session([ 'user_perPage' => 10 ]);
+        }
+        $this->perPage = $this->perPage ? $this->perPage : session('user_perPage');
+        $this->searchKeyword = $this->searchKeyword ? $this->searchKeyword : session('user_searchKeyword');
+    }
+
     public function with(): array
     {
-        $user = User::admin()->orderby($this->sortColumn,$this->sortDir);
-        $user->whereLike('name', $this->searchKeyword);
+        session([ 'user_perPage' => $this->perPage ]);
+        session([ 'user_searchKeyword' => $this->searchKeyword ]);
+
+        $user = User::admin()
+        ->orderby($this->sortColumn,$this->sortDir)
+        ->where(function($query){
+            $query->whereLike('name', $this->searchKeyword);
+            $query->orWhereLike('email', $this->searchKeyword);
+        });
         return [ 'User' => $user->paginate($this->perPage) ];
     }
 

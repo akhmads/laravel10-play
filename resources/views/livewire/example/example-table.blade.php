@@ -100,7 +100,10 @@ new class extends Component {
                     <x-hyco.table-th name="name" :sort="$sortLink" wire:click="sortOrder('name')" class="cursor-pointer"></x-hyco.table-th>
                     <x-hyco.table-th name="email" :sort="$sortLink" wire:click="sortOrder('email')" class="cursor-pointer"></x-hyco.table-th>
                     <x-hyco.table-th name="birth_date" :sort="$sortLink" wire:click="sortOrder('birth_date')" class="cursor-pointer"></x-hyco.table-th>
-                    <x-hyco.table-th name="created_at" :sort="$sortLink" wire:click="sortOrder('created_at')" class="cursor-pointer w-[180px]"></x-hyco.table-th>
+                    {{-- <x-hyco.table-th name="created_at" :sort="$sortLink" wire:click="sortOrder('created_at')" class="cursor-pointer w-[180px]"></x-hyco.table-th> --}}
+                    <th class="px-4 py-2 text-left">
+                        User
+                    </th>
                     <th class="px-4 py-2 text-left w-[150px]">
                         Action
                     </th>
@@ -123,8 +126,11 @@ new class extends Component {
                     {{ ($example->birth_date)->format('d/m/Y') }}
                 </td>
                 <td class="px-4 py-3 text-gray-600">
-                    {{ ($example->created_at)->format('d/m/Y, H:i') }}
+                    {{ $example->user->name ?? '' }}
                 </td>
+                {{-- <td class="px-4 py-3 text-gray-600">
+                    {{ ($example->created_at)->format('d/m/Y, H:i') }}
+                </td> --}}
                 <td class="h-px w-px whitespace-nowrap px-4 py-3">
                     <a href="{{ route('example.example.form', $example->id) }}" wire:navigate class="text-xs text-white bg-blue-600 px-3 py-1 rounded-lg">Edit</a>
                     <a href="javascript:void(0)" wire:click="delete({{ $example->id }})" class="text-xs bg-red-600 text-white px-3 py-1 rounded-lg">Del</a>
