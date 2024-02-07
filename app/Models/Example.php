@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Traits\HasFilter;
 use App\Models\User;
 
 class Example extends Model
 {
-    use HasFactory;
+    use HasFactory, hasFilter;
 
     protected $table = 'example';
     protected $guarded = [];

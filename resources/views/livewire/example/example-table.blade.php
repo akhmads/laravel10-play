@@ -26,9 +26,11 @@ new class extends Component {
     {
         $Example = '';
         if ( $this->ready ) {
-            $example = Example::orderby($this->sortColumn,$this->sortDir);
-            //$example->whereLike('name', $this->searchKeyword);
-            $Example = $example->paginate($this->perPage);
+            $Example = Example::orderby($this->sortColumn,$this->sortDir)
+                ->where(function($query){
+                    $query->whereLike('name', $this->searchKeyword);
+                })
+                ->paginate($this->perPage);
         }
 
         return [
@@ -130,7 +132,7 @@ new class extends Component {
             </x-hyco.table-tr>
             @empty
             <tr>
-                <td colspan="100" class="text-center py-10">No data</td>
+                <td colspan="100" class="text-center py-3">No data</td>
             </tr>
             @endforelse
 
@@ -141,7 +143,7 @@ new class extends Component {
 
             @if(!$ready)
             <tr>
-                <td colspan="100" class="text-center py-10">Loading...</td>
+                <td colspan="100" class="text-center py-3">Loading...</td>
             </tr>
             @endif
         </x-hyco.table>
