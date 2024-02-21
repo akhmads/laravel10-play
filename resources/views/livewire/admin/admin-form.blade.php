@@ -39,7 +39,7 @@ new class extends Component {
 
             $user = User::create($valid);
             session()->flash('success', __('User has been saved'));
-            $this->redirectRoute('user.admin.form', $user->id);
+            $this->set_id = $user->id;
         }
         else
         {

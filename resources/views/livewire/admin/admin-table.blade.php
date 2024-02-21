@@ -8,9 +8,9 @@ use App\Models\User;
 new class extends Component {
     use WithPagination;
 
-    public $perPage = 10;
+    public $perPage;
     public $sortColumn = "name";
-    public $sortDir = "desc";
+    public $sortDir = "asc";
     public $sortLink = [];
     public $searchKeyword = '';
     public $confirmDeletion = false;
@@ -65,6 +65,11 @@ new class extends Component {
         session()->flash('success', __('User has been deleted'));
         return redirect()->route('user.admin');
     }
+
+    public function generateFakeData()
+    {
+        User::factory()->count(100)->create();
+    }
 }; ?>
 
 <div>
@@ -83,13 +88,16 @@ new class extends Component {
 
         <x-hyco.table>
             <x-slot name="headingLeft">
-                <x-hyco.table-perpage wire:model.live="perPage" :data="[10,25,50,100]" :value="$perPage" :span="1" />
+                <x-hyco.table-perpage wire:model.live="perPage" :data="[10,25,50,100]" :value="$perPage" :span="2" />
                 <x-hyco.table-search wire:model.live.debounce.300ms="searchKeyword" :span="4" />
             </x-slot>
 
             <x-slot name="headingRight">
                 <x-hyco.link wire:navigate href="{{ route('user.admin.form',0) }}" icon="plus" class="scale-90">
                     Create
+                </x-hyco.link>
+                <x-hyco.link wire:click="generateFakeData" icon="check" class="scale-90">
+                    Generate
                 </x-hyco.link>
             </x-slot>
 
