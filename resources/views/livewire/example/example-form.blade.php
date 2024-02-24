@@ -5,6 +5,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Traits\HasCode;
+use App\Helpers\Cast;
 use App\Models\Example;
 
 new class extends Component {
@@ -56,6 +57,7 @@ new class extends Component {
             $avatar = $this->avatar->store('/', 'avatar_disk');
 
             $valid['code'] = $this->autoCode('INV-', Carbon::now());
+            $valid['number'] = Cast::number($this->number);
             $valid['active'] = $this->active ? 1 : 0;
             $valid['avatar'] = $avatar;
 
@@ -81,6 +83,7 @@ new class extends Component {
                 $valid['avatar'] = $avatar;
             }
 
+            $valid['number'] = Cast::number($this->number);
             $valid['active'] = $this->active ? 1 : 0;
 
             Example::where('id', $this->set_id)->update($valid);
