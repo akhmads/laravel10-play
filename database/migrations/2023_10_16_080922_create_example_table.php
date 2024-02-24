@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('email',100)->unique();
             $table->tinyInteger('active')->index()->default('0');
             $table->string('avatar',255)->nullable();
-            $table->foreignId('user_id')->index();
+            $table->integer('number')->nullable()->default('0');
+            $table->foreignId('user_id')->index()->default('0');
             $table->timestamps();
         });
     }

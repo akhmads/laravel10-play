@@ -3,7 +3,7 @@
 use Livewire\Volt\Component;
 //use Livewire\Attributes\Modelable;
 use Illuminate\Support\Facades\DB;
-use App\Models\Agent;
+use App\Models\User;
 
 new class extends Component {
 
@@ -16,25 +16,25 @@ new class extends Component {
 
     public function with(): array
     {
-        $agent = Agent::orderby('agent.name','asc')
+        $user = User::orderby('user.name','asc')
             ->where(function($query){
-                $query->whereLike('agent.name', $this->searchKeyword);
+                $query->whereLike('user.name', $this->searchKeyword);
             });
 
-        return [ 'agents' => $agent->limit(10)->get() ];
+        return [ 'users' => $user->limit(10)->get() ];
     }
 
     public function mount($value = '', $label = '', $disabled = false)
     {
         if( !empty($value) ){
-            $agent = Agent::where('id',$value)->get()->first();
+            $user = User::where('id',$value)->get()->first();
         }else{
-            $agent = Agent::where('id',$this->value)->get()->first();
+            $user = User::where('id',$this->value)->get()->first();
         }
-        $this->value = $agent->id ?? '';
+        $this->value = $user->id ?? '';
 
-        if ( ! empty($agent->name) ) {
-            $this->label = $agent->name;
+        if ( ! empty($user->name) ) {
+            $this->label = $user->name;
         } else {
             $this->label = $label;
         }
@@ -46,12 +46,12 @@ new class extends Component {
         $this->value = $id;
         $this->label = $label;
         $this->modal = false;
-        $this->dispatch('agent-picked', id: $id, label: $label);
+        $this->dispatch('user-picked', id: $id, label: $label);
     }
 }; ?>
 
 <div>
-    <div x-data="{ open: false }" @keyup.enter="open =! open" @close-agent-picker="open=false" class="relative">
+    <div x-data="{ open: false }" @keyup.enter="open =! open" @close-user-picker="open=false" class="relative">
         <span class="select-none absolute inset-y-0 right-0 flex items-center cursor-pointer pr-3">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -64,9 +64,9 @@ new class extends Component {
         <div x-cloak x-show="open" x-trap="open" @click.outside="open = false" class="absolute top-[calc(100%+5px)] left-0 z-50 w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-lg">
             <input wire:model.live.debounce.500ms="searchKeyword" wire:loading.class="bg-sky-50" tabindex="0" type="text" autofocus placeholder="Search" class="w-full border border-gray-300 focus:border-indigo-400 focus:outline-none py-2 px-2 mb-2 rounded-md shadow-sm">
             <div class="max-h-[200px] overflow-y-auto">
-                @forelse ( $agents as $agent )
-                <div wire:key="agent-picker-{{ $agent->id }}" wire:click="pick('{{ $agent->id }}','{{ $agent->name }}');$dispatch('close-agent-picker');" class="p-1 cursor-pointer hover:bg-blue-50" tabindex="0">
-                    {{ $agent->name }}
+                @forelse ( $users as $user )
+                <div wire:key="user-picker-{{ $user->id }}" wire:click="pick('{{ $user->id }}','{{ $user->name }}');$dispatch('close-user-picker');" class="p-1 cursor-pointer hover:bg-blue-50" tabindex="0">
+                    {{ $user->name }}
                 </div>
                 @empty
                 <div class="p-1">No data found.</div>

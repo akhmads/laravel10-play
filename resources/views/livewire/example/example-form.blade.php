@@ -16,6 +16,7 @@ new class extends Component {
     public $gender;
     public $birth_date;
     public $address;
+    public $number;
     public $active;
     public $email;
     public $avatar;
@@ -31,6 +32,7 @@ new class extends Component {
         $this->gender = $example->gender ?? '';
         $this->birth_date = isset($example->birth_date) ? ($example->birth_date)->format('Y-m-d') : '';
         $this->address = $example->address ?? '';
+        $this->number = $example->number ?? '';
         $this->active = $example->active ?? '';
         $this->email = $example->email ?? '';
         $this->showAvatar = $example->avatar ?? '';
@@ -45,6 +47,7 @@ new class extends Component {
                 'name' => 'required',
                 'birth_date' => 'required',
                 'address' => 'required',
+                'number' => '',
                 'user_id' => 'required',
                 'email' => 'required|email|unique:example,email',
                 'avatar' => 'required|image|max:2048|mimes:jpg,jpeg,png',
@@ -66,6 +69,7 @@ new class extends Component {
                 'name' => 'required',
                 'birth_date' => 'required',
                 'address' => 'required',
+                'number' => '',
                 'user_id' => 'required',
                 'email' => 'required|email|unique:example,email,'.$this->set_id,
                 'avatar' => 'nullable|image|max:2048|mimes:jpg,jpeg,png,webp,svg',
@@ -131,6 +135,12 @@ new class extends Component {
                         <x-hyco.label for="address" :value="__('Address')" class="mb-1" />
                         <x-hyco.textarea id="address" wire:model="address" class="w-full h-[100px]"></x-hyco.textarea>
                         <x-hyco.input-error class="mt-2" for="address" />
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-6">
+                        <x-hyco.label for="number" :value="__('Number')" class="mb-1" />
+                        <x-hyco.input id="number" wire:model="number" class="w-full" />
+                        <x-hyco.input-error class="mt-2" for="number" />
                     </div>
 
                     <div class="col-span-6 sm:col-span-6">
