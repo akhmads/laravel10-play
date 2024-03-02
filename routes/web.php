@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\PlayController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,12 @@ require __DIR__.'/auth.php';
 
 Route::middleware(['auth'])->group(function (){
 
-    Volt::route('/play',                'play/play')->name('play');
+    Route::get('/play/index', [PlayController::class, 'index'])->name('play.index');
+    Route::get('/play/create-post', [PlayController::class, 'createPost'])->name('play.create-post');
+    Route::get('/play/delete-post', [PlayController::class, 'deletePost'])->name('play.delete-post');
+    Route::get('/play/create-comment', [PlayController::class, 'createComment'])->name('play.create-comment');
+    Route::get('/play/clear-post', [PlayController::class, 'clearPost'])->name('play.clear-post');
+
     Volt::route('/example',             'example/example-table')->name('example.example');
     Volt::route('/example/{id}',        'example/example-form')->name('example.example.form');
     Volt::route('/user-admin',          'admin/admin-table')->name('user.admin');
