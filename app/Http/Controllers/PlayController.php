@@ -10,16 +10,19 @@ use App\Models\Comment;
 
 class PlayController extends Controller
 {
-    public function __construct()
-    {
-
-    }
-
     function index()
     {
         DB::enableQueryLog();
 
-        $posts = Post::with('user:id,name')->with('comments')->get();
+        $user = User::whereLike('name','%taylor%')->get();
+
+        $posts = Post::with('user:id,name')->with('comments');
+
+        if (count($user)) {
+            $posts->whereBelongsTo($user);
+        }
+
+        $posts = $posts->get();
 
         return view('play',compact('posts'));
     }
