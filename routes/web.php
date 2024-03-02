@@ -28,6 +28,7 @@ require __DIR__.'/auth.php';
 
 Route::middleware(['auth'])->group(function (){
 
+    Volt::route('/play',                'play/play')->name('play');
     Volt::route('/example',             'example/example-table')->name('example.example');
     Volt::route('/example/{id}',        'example/example-form')->name('example.example.form');
     Volt::route('/user-admin',          'admin/admin-table')->name('user.admin');

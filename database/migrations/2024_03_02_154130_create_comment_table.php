@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('comment', function (Blueprint $table) {
             $table->id();
+            $table->text('text');
+            $table->foreignId('post_id')->index();
+            $table->foreignId('user_id')->index();
             $table->timestamps();
         });
     }
