@@ -14,7 +14,6 @@ new class extends Component {
     public $set_id;
     public $code;
     public $name;
-    public $gender;
     public $birth_date;
     public $address;
     public $number;
@@ -30,7 +29,6 @@ new class extends Component {
         $this->set_id = $example->id ?? '';
         $this->code = $example->code ?? '[auto]';
         $this->name = $example->name ?? '';
-        $this->gender = $example->gender ?? '';
         $this->birth_date = isset($example->birth_date) ? ($example->birth_date)->format('Y-m-d') : '';
         $this->address = $example->address ?? '';
         $this->number = $example->number ?? '';
@@ -60,8 +58,8 @@ new class extends Component {
             $valid['number'] = Cast::number($this->number);
             $valid['active'] = $this->active ? 1 : 0;
             $valid['avatar'] = $avatar;
-
             $example = Example::create($valid);
+
             session()->flash('success', __('Example has been saved'));
             $this->redirectRoute('example.example.form', $example->id);
         }
@@ -85,8 +83,8 @@ new class extends Component {
 
             $valid['number'] = Cast::number($this->number);
             $valid['active'] = $this->active ? 1 : 0;
-
             Example::where('id', $this->set_id)->update($valid);
+
             session()->flash('success', __('Example has been saved'));
         }
     }

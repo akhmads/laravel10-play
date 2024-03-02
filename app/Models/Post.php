@@ -4,21 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Traits\HasFilter;
-use App\Helpers\Cast;
-use App\Models\User;
 
-class Example extends Model
+class Post extends Model
 {
     use HasFactory, hasFilter;
 
-    protected $table = 'example';
+    protected $table = 'post';
     protected $guarded = [];
-    protected $casts = [
-        'birth_date' => 'date',
-    ];
 
     public function user(): BelongsTo
     {
